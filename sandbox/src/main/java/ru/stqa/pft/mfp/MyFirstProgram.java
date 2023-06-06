@@ -19,7 +19,7 @@ public class MyFirstProgram {
 		System.out.println("Расстояние между точками " + p1 + " и " + p2 + " = " + distance(p1, p2));
 
 		// через метод класса (вариант 1)
-		System.out.println("Расстояние между точками " + p1 + " и " + p2 + " = " + new Point().distance(p1, p2));
+		System.out.println("Расстояние между точками " + p1 + " и " + p2 + " = " + Point.distance(p1, p2));
 
 		// через метод класса (вариант 2)
 		System.out.println("Расстояние между точками " + p1 + " и " + p2 + " = " + p1.distance(p2));

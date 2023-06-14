@@ -1,5 +1,7 @@
 package ru.stqa.pft.addressbook;
 
+import java.io.File;
+import java.nio.file.Path;
 import java.time.Duration;
 
 import org.testng.annotations.*;
@@ -32,13 +34,14 @@ public class ContactCreationTests {
     @Test
     public void testContactCreation() throws Exception {
         addNew();
+        Path avatar = Path.of("src/test/resources/avatar.jpg");
         fillContactForm(new ContactData("Alexey", "Vladimirivich", "Krasnoschekov",
-                "ramtary", "D:\\Программирование на Java для тестировщиков\\java_pft\\addressbook-web-tests\\src\\test\\resources\\avatar.jpg", // дико извиняюсь за длинное имя директории, добавить из ресурсов у меня не получилось =(
-                "My contact", "PSB", "Nikolaiy Panova 51, 441", "+79376473503",
-                "cloudmiin@gmail.com", "cloudmiin1@gmail.com", "cloudmiin2@gmail.com",
-                "+8462555555", "+8463232255", "+744477", "vk.com\\test1", "1",
-                "January", "1990", "1", "January", "1990", "test1",
-                "Nikolaiy Panova 50, 442", "+79376473604", "testNote"));
+                "ramtary", avatar.toAbsolutePath().toString(), "My contact", "PSB",
+                "Nikolaiy Panova 51, 441", "+79376473503", "cloudmiin@gmail.com",
+                "cloudmiin1@gmail.com", "cloudmiin2@gmail.com", "+8462555555",
+                "+8463232255", "+744477", "vk.com/test1", "1", "January",
+                "1990", "1", "January", "1990", "test1",
+                "Nikolaiy Panova 50, 442", "+793764733655", "testNote"));
         submitContactCreation();
         returnHomePage();
     }
@@ -80,19 +83,19 @@ public class ContactCreationTests {
         wd.findElement(By.name("address")).clear();
         wd.findElement(By.name("address")).sendKeys(contactData.getAddress());
         wd.findElement(By.name("mobile")).clear();
-        wd.findElement(By.name("mobile")).sendKeys(contactData.getMobile());
+        wd.findElement(By.name("mobile")).sendKeys(contactData.getMobilePhone());
         wd.findElement(By.name("email")).clear();
         wd.findElement(By.name("email")).sendKeys(contactData.getEmail());
         wd.findElement(By.name("email2")).clear();
-        wd.findElement(By.name("email2")).sendKeys(contactData.getEmail2());
+        wd.findElement(By.name("email2")).sendKeys(contactData.getSecondEmail());
         wd.findElement(By.name("email3")).clear();
-        wd.findElement(By.name("email3")).sendKeys(contactData.getEmail3());
+        wd.findElement(By.name("email3")).sendKeys(contactData.getThirdEmail());
         wd.findElement(By.name("home")).click();
         wd.findElement(By.name("home")).clear();
-        wd.findElement(By.name("home")).sendKeys(contactData.getHome());
+        wd.findElement(By.name("home")).sendKeys(contactData.getHomePhone());
         wd.findElement(By.name("work")).click();
         wd.findElement(By.name("work")).clear();
-        wd.findElement(By.name("work")).sendKeys(contactData.getWork());
+        wd.findElement(By.name("work")).sendKeys(contactData.getWorkPhone());
         wd.findElement(By.name("fax")).click();
         wd.findElement(By.name("fax")).clear();
         wd.findElement(By.name("fax")).sendKeys(contactData.getFax());
@@ -117,9 +120,9 @@ public class ContactCreationTests {
         new Select(wd.findElement(By.name("new_group"))).selectByVisibleText(contactData.getNew_group());
         wd.findElement(By.name("address2")).click();
         wd.findElement(By.name("address2")).clear();
-        wd.findElement(By.name("address2")).sendKeys(contactData.getAddress2());
+        wd.findElement(By.name("address2")).sendKeys(contactData.getSecondAddress());
         wd.findElement(By.name("phone2")).clear();
-        wd.findElement(By.name("phone2")).sendKeys(contactData.getPhone2());
+        wd.findElement(By.name("phone2")).sendKeys(contactData.getSecondHomePhone());
         wd.findElement(By.name("notes")).click();
         wd.findElement(By.name("notes")).clear();
         wd.findElement(By.name("notes")).sendKeys(contactData.getNotes());

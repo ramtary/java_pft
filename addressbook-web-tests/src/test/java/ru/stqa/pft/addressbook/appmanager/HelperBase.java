@@ -14,8 +14,10 @@ public class HelperBase {
     }
 
     protected void type(By locator, String text) {
-        if (!locator.toString().equals("By.name: photo")) {
+        try {
             click(locator);
+        } catch (Exception ignored) {
+
         }
         wd.findElement(locator).clear();
         wd.findElement(locator).sendKeys(text);

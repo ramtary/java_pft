@@ -8,7 +8,7 @@ import ru.stqa.pft.addressbook.models.ContactData;
 public class ContactCreationTests extends TestBase {
 
     @Test
-    public void testContactCreation() throws Exception {
+    public void testContactCreation() {
         app.getContactHelper().addNewContact();
         Path avatar = Path.of("src/test/resources/avatar.jpg");
         app.getContactHelper().fillContactForm(new ContactData("Alexey", "Vladimirivich", "Krasnoschekov",

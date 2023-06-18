@@ -10,7 +10,7 @@ public class ContactHelper extends HelperBase {
         super(wd);
     }
 
-    public void returnHomePage() {
+    public void returnToHomePage() {
         click(By.linkText("home page"));
     }
 
@@ -18,7 +18,7 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("//div[@id='content']/form/input[21]"));
     }
 
-    public void fillContactForm(ContactData contactData) {
+    public void fillContactForm(ContactData contactData, boolean itsCreation) {
         type(By.name("firstname"), contactData.getFirstname());
 
         type(By.name("middlename"), contactData.getMiddlename());
@@ -63,7 +63,9 @@ public class ContactHelper extends HelperBase {
 
         type(By.name("ayear"), contactData.getAyear());
 
-        select(By.name("new_group"), contactData.getNew_group());
+        if (itsCreation) {
+            select(By.name("new_group"), contactData.getNew_group());
+        }
 
         type(By.name("address2"), contactData.getSecondAddress());
 
@@ -84,7 +86,15 @@ public class ContactHelper extends HelperBase {
         click(By.xpath("//input[@value='Delete']"));
     }
 
-    public void cofirmContactDeletion() {
+    public void confirmContactDeletion() {
         wd.switchTo().alert().accept();
+    }
+
+    public void initContactModification() {
+        click(By.xpath("//img[@alt='Edit']"));
+    }
+
+    public void submitContactModification() {
+        click(By.xpath("//input[22]"));
     }
 }

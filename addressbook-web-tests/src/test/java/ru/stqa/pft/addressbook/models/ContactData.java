@@ -61,6 +61,39 @@ public class ContactData {
         this.notes = notes;
     }
 
+    public ContactData(String firstname, String middlename, String lastname, String nickname, String photo,
+                       String title, String company, String address, String mobilePhone, String email, String secondEmail,
+                       String thirdEmail, String homePhone, String workPhone, String fax, String homepage, String bday, String bmonth,
+                       String byear, String aday, String amonth, String ayear, String secondAddress,
+                       String secondHomePhone, String notes) {
+        this.firstname = firstname;
+        this.middlename = middlename;
+        this.lastname = lastname;
+        this.nickname = nickname;
+        this.photo = photo;
+        this.title = title;
+        this.company = company;
+        this.address = address;
+        this.mobilePhone = mobilePhone;
+        this.email = email;
+        this.secondEmail = secondEmail;
+        this.thirdEmail = thirdEmail;
+        this.homePhone = homePhone;
+        this.workPhone = workPhone;
+        this.fax = fax;
+        this.homepage = homepage;
+        this.bday = bday;
+        this.bmonth = bmonth;
+        this.byear = byear;
+        this.aday = aday;
+        this.amonth = amonth;
+        this.ayear = ayear;
+        this.new_group = null;
+        this.secondAddress = secondAddress;
+        this.secondHomePhone = secondHomePhone;
+        this.notes = notes;
+    }
+
     public String getFirstname() {
         return firstname;
     }

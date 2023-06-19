@@ -38,7 +38,7 @@ public class ApplicationManager {
 //            case "internet explorer" -> wd = new InternetExplorerDriver();
 //        }
 
-        wd.manage().timeouts().implicitlyWait(Duration.ofSeconds(30));
+        wd.manage().timeouts().implicitlyWait(Duration.ofSeconds(0));
         wd.get("http://localhost/addressbook/");
         contactHelper = new ContactHelper(wd);
         groupHelper = new GroupHelper(wd);

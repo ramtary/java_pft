@@ -2,6 +2,7 @@ package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.testng.Assert;
 import ru.stqa.pft.addressbook.models.ContactData;
 
 public class ContactHelper extends HelperBase {
@@ -65,6 +66,8 @@ public class ContactHelper extends HelperBase {
 
         if (itsCreation) {
             select(By.name("new_group"), contactData.getNew_group());
+        } else {
+            Assert.assertFalse(isElementPresent(By.name("new_group")));
         }
 
         type(By.name("address2"), contactData.getSecondAddress());

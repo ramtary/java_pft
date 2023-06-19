@@ -16,8 +16,11 @@ public class HelperBase {
     protected void type(By locator, String text) {
         click(locator);
         if (text != null) {
-            wd.findElement(locator).clear();
-            wd.findElement(locator).sendKeys(text);
+            String existingText = wd.findElement(locator).getAttribute("value");
+            if (!existingText.equals(text)) {
+                wd.findElement(locator).clear();
+                wd.findElement(locator).sendKeys(text);
+            }
         }
     }
 
@@ -27,8 +30,11 @@ public class HelperBase {
 
     protected void addPhoto(By locator, String path) {
         if (path != null) {
-            wd.findElement(locator).clear();
-            wd.findElement(locator).sendKeys(path);
+            String existingPath = wd.findElement(locator).getAttribute("value");
+            if (!existingPath.equals(path)) {
+                wd.findElement(locator).clear();
+                wd.findElement(locator).sendKeys(path);
+            }
         }
     }
 

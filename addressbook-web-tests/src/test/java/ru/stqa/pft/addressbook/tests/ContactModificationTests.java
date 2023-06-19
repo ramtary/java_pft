@@ -10,8 +10,17 @@ public class ContactModificationTests extends TestBase {
     @Test
     public void contactModificationTest() {
         app.getNavigationHelper().goToToHomePage();
-        app.getContactHelper().initContactModification();
         Path avatar = Path.of("src/test/resources/avatar_mod.jpg");
+        if (app.getContactHelper().isThereAContact()) {
+            app.getContactHelper().createContact(new ContactData("Alexey", "Vladimirivich", "Krasnoschekov",
+                    "ramtary", avatar.toAbsolutePath().toString(), "My contact", "PSB",
+                    "Nikolaiy Panova 51, 441", "+79376473503", "cloudmiin@gmail.com",
+                    "cloudmiin1@gmail.com", "cloudmiin2@gmail.com", "+8462555555",
+                    "+8463232255", "+744477", "vk.com/test1", "1", "January",
+                    "1990", "1", "January", "1990", "test1",
+                    "Nikolaiy Panova 50, 442", "+793764733655", "testNote"), true);
+        }
+        app.getContactHelper().initContactModification();
         app.getContactHelper().fillContactForm(new ContactData("Alexey", "Vladimirivich", "Krasnoschekov",
                 "ramtary163", avatar.toAbsolutePath().toString(), "My contact", "PSB",
                 "Nikolaiy Panova 51, 441", "+79376473503", "cloudmiin@gmail163.com",

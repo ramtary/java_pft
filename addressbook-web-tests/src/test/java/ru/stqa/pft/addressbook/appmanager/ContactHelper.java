@@ -77,7 +77,7 @@ public class ContactHelper extends HelperBase {
         type(By.name("notes"), contactData.getNotes());
     }
 
-    public void addNewContact() {
+    public void initContactCreation() {
         click(By.linkText("add new"));
     }
 

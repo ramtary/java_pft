@@ -9,7 +9,8 @@ public class ContactCreationTests extends TestBase {
 
     @Test
     public void testContactCreation() {
-        app.getContactHelper().addNewContact();
+        app.getNavigationHelper().goToToHomePage();
+        app.getContactHelper().initContactCreation();
         Path avatar = Path.of("src/test/resources/avatar.jpg");
         app.getContactHelper().fillContactForm(new ContactData("Alexey", "Vladimirivich", "Krasnoschekov",
                 "ramtary", avatar.toAbsolutePath().toString(), "My contact", "PSB",

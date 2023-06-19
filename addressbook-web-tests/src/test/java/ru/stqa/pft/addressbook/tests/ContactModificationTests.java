@@ -9,6 +9,7 @@ public class ContactModificationTests extends TestBase {
 
     @Test
     public void contactModificationTest() {
+        app.getNavigationHelper().goToToHomePage();
         app.getContactHelper().initContactModification();
         Path avatar = Path.of("src/test/resources/avatar_mod.jpg");
         app.getContactHelper().fillContactForm(new ContactData("Alexey", "Vladimirivich", "Krasnoschekov",

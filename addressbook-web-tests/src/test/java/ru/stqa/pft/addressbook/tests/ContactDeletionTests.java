@@ -18,7 +18,7 @@ public class ContactDeletionTests extends TestBase {
                     "cloudmiin1@gmail.com", "cloudmiin2@gmail.com", "+8462555555",
                     "+8463232255", "+744477", "vk.com/test1", "1", "January",
                     "1990", "1", "January", "1990", "test1",
-                    "Nikolaiy Panova 50, 442", "+793764733655", "testNote"), true);
+                    "Nikolaiy Panova 50, 442", "+793764733655", "testNote"));
         }
         app.getContactHelper().selectContact();
         app.getContactHelper().deleteSelectedContact();

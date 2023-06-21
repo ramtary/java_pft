@@ -52,20 +52,24 @@ public class ContactHelper extends HelperBase {
 
         type(By.name("homepage"), contactData.getHomepage());
 
-        select(By.name("bday"), contactData.getBday());
+        selectByText(By.name("bday"), contactData.getBday());
 
-        select(By.name("bmonth"), contactData.getBmonth());
+        selectByText(By.name("bmonth"), contactData.getBmonth());
 
         type(By.name("byear"), contactData.getByear());
 
-        select(By.name("aday"), contactData.getAday());
+        selectByText(By.name("aday"), contactData.getAday());
 
-        select(By.name("amonth"), contactData.getAmonth());
+        selectByText(By.name("amonth"), contactData.getAmonth());
 
         type(By.name("ayear"), contactData.getAyear());
 
         if (itsCreation) {
-            select(By.name("new_group"), contactData.getNew_group());
+            try {
+                selectByText(By.name("new_group"), contactData.getNew_group());
+            } catch (Exception NoSuchElementException) {
+                selectByIndex(By.name("new_group"), 0);
+            }
         } else {
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }

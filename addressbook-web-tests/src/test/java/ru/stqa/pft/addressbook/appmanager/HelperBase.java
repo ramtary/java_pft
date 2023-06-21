@@ -38,9 +38,14 @@ public class HelperBase {
         }
     }
 
-    protected void select(By locator, String text) {
+    protected void selectByText(By locator, String text) {
         click(locator);
         new Select(wd.findElement(locator)).selectByVisibleText(text);
+    }
+
+    protected void selectByIndex(By locator, int index) {
+        click(locator);
+        new Select(wd.findElement(locator)).selectByIndex(index);
     }
 
     public boolean isElementPresent(By by) {

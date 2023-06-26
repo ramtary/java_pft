@@ -6,9 +6,11 @@ import org.openqa.selenium.WebElement;
 import ru.stqa.pft.addressbook.models.GroupData;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class GroupHelper extends HelperBase {
+    public final Comparator<? super GroupData> byId = Comparator.comparingInt(GroupData::getId);
 
     public GroupHelper(WebDriver wd) {
         super(wd);

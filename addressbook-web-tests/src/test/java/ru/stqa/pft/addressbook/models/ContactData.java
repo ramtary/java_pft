@@ -1,5 +1,7 @@
 package ru.stqa.pft.addressbook.models;
 
+import java.util.Objects;
+
 public class ContactData {
     private final String firstname;
     private final String middlename;
@@ -27,6 +29,32 @@ public class ContactData {
     private final String secondAddress;
     private final String secondHomePhone;
     private final String notes;
+
+    @Override
+    public String toString() {
+        return "ContactData{" +
+                "firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ContactData that = (ContactData) o;
+
+        if (!Objects.equals(firstname, that.firstname)) return false;
+        return Objects.equals(lastname, that.lastname);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = firstname != null ? firstname.hashCode() : 0;
+        result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
+        return result;
+    }
 
     public ContactData(String firstname, String middlename, String lastname, String nickname, String photo,
                        String title, String company, String address, String mobilePhone, String email, String secondEmail,
@@ -59,6 +87,35 @@ public class ContactData {
         this.secondAddress = secondAddress;
         this.secondHomePhone = secondHomePhone;
         this.notes = notes;
+    }
+
+    public ContactData(String firstname, String lastname) {
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.middlename = null;
+        this.nickname = null;
+        this.photo = null;
+        this.title = null;
+        this.company = null;
+        this.address = null;
+        this.mobilePhone = null;
+        this.email = null;
+        this.secondEmail = null;
+        this.thirdEmail = null;
+        this.homePhone = null;
+        this.workPhone = null;
+        this.fax = null;
+        this.homepage = null;
+        this.bday = null;
+        this.bmonth = null;
+        this.byear = null;
+        this.aday = null;
+        this.amonth = null;
+        this.ayear = null;
+        this.new_group = null;
+        this.secondAddress = null;
+        this.secondHomePhone = null;
+        this.notes = null;
     }
 
     public String getFirstname() {

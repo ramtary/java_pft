@@ -7,9 +7,11 @@ import org.testng.Assert;
 import ru.stqa.pft.addressbook.models.ContactData;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class ContactHelper extends HelperBase {
+    public final Comparator<? super ContactData> byId = Comparator.comparingInt(ContactData::getId);
 
     public ContactHelper(WebDriver wd) {
         super(wd);
@@ -56,15 +58,31 @@ public class ContactHelper extends HelperBase {
 
         type(By.name("homepage"), contactData.getHomepage());
 
-        selectByText(By.name("bday"), contactData.getBday());
+        try {
+            selectByText(By.name("bday"), contactData.getBday());
+        } catch (Exception NoSuchElementException) {
+            selectByIndex(By.name("bday"), 0);
+        }
 
-        selectByText(By.name("bmonth"), contactData.getBmonth());
+        try {
+            selectByText(By.name("bmonth"), contactData.getBmonth());
+        } catch (Exception NoSuchElementException) {
+            selectByIndex(By.name("bmonth"), 0);
+        }
 
         type(By.name("byear"), contactData.getByear());
 
-        selectByText(By.name("aday"), contactData.getAday());
+        try {
+            selectByText(By.name("aday"), contactData.getAday());
+        } catch (Exception NoSuchElementException) {
+            selectByIndex(By.name("aday"), 0);
+        }
 
-        selectByText(By.name("amonth"), contactData.getAmonth());
+        try {
+            selectByText(By.name("amonth"), contactData.getAmonth());
+        } catch (Exception NoSuchElementException) {
+            selectByIndex(By.name("amonth"), 0);
+        }
 
         type(By.name("ayear"), contactData.getAyear());
 
@@ -101,8 +119,9 @@ public class ContactHelper extends HelperBase {
         wd.switchTo().alert().accept();
     }
 
-    public void initContactModification() {
-        click(By.xpath("//img[@alt='Edit']"));
+    public void initContactModification(int index) {
+        //click(By.xpath("//img[@alt='Edit']"));
+        wd.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
     }
 
     public void submitContactModification() {
@@ -125,12 +144,13 @@ public class ContactHelper extends HelperBase {
         List<WebElement> contactElements = wd.findElements(By.cssSelector("tr"));
         contactElements.remove(0);
 
-        for (WebElement element: contactElements) {
+        for (WebElement element : contactElements) {
             List<WebElement> contactDataElements = element.findElements(By.cssSelector("td"));
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("value"));
             String lastname = contactDataElements.get(1).getText();
             String firstname = contactDataElements.get(2).getText();
 
-            ContactData contact = new ContactData(firstname, lastname);
+            ContactData contact = new ContactData(id, firstname, lastname);
             contacts.add(contact);
         }
 

@@ -3,6 +3,7 @@ package ru.stqa.pft.addressbook.models;
 import java.util.Objects;
 
 public class ContactData {
+    private int id;
     private final String firstname;
     private final String middlename;
     private final String lastname;
@@ -28,15 +29,6 @@ public class ContactData {
     private final String new_group;
     private final String secondAddress;
     private final String secondHomePhone;
-    private final String notes;
-
-    @Override
-    public String toString() {
-        return "ContactData{" +
-                "firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                '}';
-    }
 
     @Override
     public boolean equals(Object o) {
@@ -45,22 +37,36 @@ public class ContactData {
 
         ContactData that = (ContactData) o;
 
+        if (id != that.id) return false;
         if (!Objects.equals(firstname, that.firstname)) return false;
         return Objects.equals(lastname, that.lastname);
     }
 
     @Override
+    public String toString() {
+        return "ContactData{" +
+                "id=" + id +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                '}';
+    }
+
+    @Override
     public int hashCode() {
-        int result = firstname != null ? firstname.hashCode() : 0;
+        int result = id;
+        result = 31 * result + (firstname != null ? firstname.hashCode() : 0);
         result = 31 * result + (lastname != null ? lastname.hashCode() : 0);
         return result;
     }
+
+    private final String notes;
 
     public ContactData(String firstname, String middlename, String lastname, String nickname, String photo,
                        String title, String company, String address, String mobilePhone, String email, String secondEmail,
                        String thirdEmail, String homePhone, String workPhone, String fax, String homepage, String bday, String bmonth,
                        String byear, String aday, String amonth, String ayear, String new_group, String secondAddress,
                        String secondHomePhone, String notes) {
+        this.id = 0;
         this.firstname = firstname;
         this.middlename = middlename;
         this.lastname = lastname;
@@ -89,7 +95,8 @@ public class ContactData {
         this.notes = notes;
     }
 
-    public ContactData(String firstname, String lastname) {
+    public ContactData(int id, String firstname, String lastname) {
+        this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
         this.middlename = null;
@@ -116,6 +123,10 @@ public class ContactData {
         this.secondAddress = null;
         this.secondHomePhone = null;
         this.notes = null;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getFirstname() {
@@ -220,5 +231,9 @@ public class ContactData {
 
     public String getNotes() {
         return notes;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

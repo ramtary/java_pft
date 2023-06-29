@@ -120,7 +120,6 @@ public class ContactHelper extends HelperBase {
     }
 
     public void initContactModification(int index) {
-        //click(By.xpath("//img[@alt='Edit']"));
         wd.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
     }
 

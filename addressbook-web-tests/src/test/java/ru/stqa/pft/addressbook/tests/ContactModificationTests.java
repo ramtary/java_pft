@@ -11,10 +11,10 @@ import java.util.List;
 public class ContactModificationTests extends TestBase {
     @BeforeMethod
     public void ensurePreconditions() {
-        app.getNavigationHelper().goToToHomePage();
+        app.goTo().homePage();
         Path avatar = Path.of("src/test/resources/avatar_mod.jpg");
-        if (app.getContactHelper().isThereAContact()) {
-            app.getContactHelper().createContact(new ContactData("Alexey", "Vladimirivich", "Krasnoschekov",
+        if (app.contact().list().size() == 0) {
+            app.contact().create(new ContactData("Alexey", "Vladimirivich", "Krasnoschekov",
                     "ramtary", avatar.toAbsolutePath().toString(), "My contact", "PSB",
                     "Nikolaiy Panova 51, 441", "+79376473503", "cloudmiin@gmail.com",
                     "cloudmiin1@gmail.com", "cloudmiin2@gmail.com", "+8462555555",
@@ -26,17 +26,17 @@ public class ContactModificationTests extends TestBase {
 
     @Test
     public void contactModificationTest() {
-        List<ContactData> before = app.getContactHelper().getContactList();
+        List<ContactData> before = app.contact().list();
         int index = before.size() - 1;
         ContactData contact = new ContactData(before.get(index).getId(), "Alex", "Kras");
-        app.getContactHelper().modifyContact(index, contact);
-        List<ContactData> after = app.getContactHelper().getContactList();
+        app.contact().modify(index, contact);
+        List<ContactData> after = app.contact().list();
         Assert.assertEquals(after.size(), before.size());
 
         before.remove(index);
         before.add(contact);
-        before.sort(app.getContactHelper().byId);
-        after.sort(app.getContactHelper().byId);
+        before.sort(app.contact().byId);
+        after.sort(app.contact().byId);
         Assert.assertEquals(before, after);
     }
 }

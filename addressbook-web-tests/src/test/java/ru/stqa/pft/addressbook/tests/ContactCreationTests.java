@@ -11,8 +11,8 @@ public class ContactCreationTests extends TestBase {
 
     @Test
     public void testContactCreation() {
-        app.getNavigationHelper().goToToHomePage();
-        List<ContactData> before = app.getContactHelper().getContactList();
+        app.goTo().homePage();
+        List<ContactData> before = app.contact().list();
         Path avatar = Path.of("src/test/resources/avatar.jpg");
         ContactData contact = new ContactData("Alexey", "Vladimirivich", "Krasnoschekov",
                 "ramtary", avatar.toAbsolutePath().toString(), "My contact", "PSB",
@@ -21,14 +21,14 @@ public class ContactCreationTests extends TestBase {
                 "+8463232255", "+744477", "vk.com/test1", "1", "January",
                 "1990", "1", "January", "1990", "test1",
                 "Nikolaiy Panova 50, 442", "+793764733655", "testNote");
-        app.getContactHelper().createContact(contact);
-        List<ContactData> after = app.getContactHelper().getContactList();
+        app.contact().create(contact);
+        List<ContactData> after = app.contact().list();
         Assert.assertEquals(after.size(), before.size() + 1);
 
-        contact.setId(after.stream().max(app.getContactHelper().byId).get().getId());
+        contact.setId(after.stream().max(app.contact().byId).get().getId());
         before.add(contact);
-        before.sort(app.getContactHelper().byId);
-        after.sort(app.getContactHelper().byId);
+        before.sort(app.contact().byId);
+        after.sort(app.contact().byId);
         Assert.assertEquals(before, after);
 
     }

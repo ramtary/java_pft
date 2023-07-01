@@ -10,27 +10,27 @@ import java.util.List;
 public class GroupModificationTests extends TestBase {
     @BeforeMethod
     public void ensurePreconditions() {
-        app.getNavigationHelper().goToGroupPage();
-        if (app.getGroupHelper().isThereAGroup()) {
-            app.getGroupHelper().createGroup(new GroupData("test1", null, null));
+        app.goTo().groupPage();
+        if (app.group().list().size() == 0) {
+            app.group().create(new GroupData("test1", null, null));
         }
     }
 
     @Test
     public void groupModificationTest() {
-        List<GroupData> before = app.getGroupHelper().getGroupList();
+        List<GroupData> before = app.group().list();
         int index = before.size() - 1;
         GroupData group = new GroupData(before.get(index).getId(), "test11", "test22", "test33");
 
-        app.getGroupHelper().modifyGroup(index, group);
+        app.group().modify(index, group);
 
-        List<GroupData> after = app.getGroupHelper().getGroupList();
+        List<GroupData> after = app.group().list();
         Assert.assertEquals(after.size(), before.size());
 
         before.remove(index);
         before.add(group);
-        before.sort(app.getGroupHelper().byId);
-        after.sort(app.getGroupHelper().byId);
+        before.sort(app.group().byId);
+        after.sort(app.group().byId);
         Assert.assertEquals(before, after);
     }
 }

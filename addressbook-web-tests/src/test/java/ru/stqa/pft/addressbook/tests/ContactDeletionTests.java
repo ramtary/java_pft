@@ -11,10 +11,10 @@ import java.util.List;
 public class ContactDeletionTests extends TestBase {
     @BeforeMethod
     public void ensurePreconditions() {
-        app.getNavigationHelper().goToToHomePage();
+        app.goTo().homePage();
         Path avatar = Path.of("src/test/resources/avatar_mod.jpg");
-        if (app.getContactHelper().isThereAContact()) {
-            app.getContactHelper().createContact(new ContactData("Alexey", "Vladimirivich", "Krasnoschekov",
+        if (app.contact().list().size() == 0) {
+            app.contact().create(new ContactData("Alexey", "Vladimirivich", "Krasnoschekov",
                     "ramtary", avatar.toAbsolutePath().toString(), "My contact", "PSB",
                     "Nikolaiy Panova 51, 441", "+79376473503", "cloudmiin@gmail.com",
                     "cloudmiin1@gmail.com", "cloudmiin2@gmail.com", "+8462555555",
@@ -26,17 +26,16 @@ public class ContactDeletionTests extends TestBase {
 
     @Test
     public void testContactDeletion() {
-        List<ContactData> before = app.getContactHelper().getContactList();
-        app.getContactHelper().selectContact(before.size() - 1);
-        app.getContactHelper().deleteSelectedContact();
-        if (app.getContactHelper().isAlertPresent()) {
-            app.getContactHelper().confirmContactDeletion();
-        }
-        app.getNavigationHelper().goToToHomePage();
-        List<ContactData> after = app.getContactHelper().getContactList();
+        List<ContactData> before = app.contact().list();
+        int index = before.size() - 1;
+        app.contact().delete(index);
+        app.goTo().homePage();
+        List<ContactData> after = app.contact().list();
         Assert.assertEquals(after.size(), before.size() - 1);
 
-        before.remove(before.size() - 1);
+        before.remove(index);
         Assert.assertEquals(before, after);
     }
+
+
 }

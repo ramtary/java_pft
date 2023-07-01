@@ -14,13 +14,15 @@ public class ContactDeletionTests extends TestBase {
         app.goTo().homePage();
         Path avatar = Path.of("src/test/resources/avatar_mod.jpg");
         if (app.contact().list().size() == 0) {
-            app.contact().create(new ContactData("Alexey", "Vladimirivich", "Krasnoschekov",
-                    "ramtary", avatar.toAbsolutePath().toString(), "My contact", "PSB",
-                    "Nikolaiy Panova 51, 441", "+79376473503", "cloudmiin@gmail.com",
-                    "cloudmiin1@gmail.com", "cloudmiin2@gmail.com", "+8462555555",
-                    "+8463232255", "+744477", "vk.com/test1", "1", "January",
-                    "1990", "1", "January", "1990", "test1",
-                    "Nikolaiy Panova 50, 442", "+793764733655", "testNote"));
+            app.contact().create(new ContactData().withFirstname("Alexey").withMiddlename("Vladimirivich").withLastname("Krasnoschekov")
+                    .withNickname("ramtary").withPhoto(avatar.toAbsolutePath().toString()).withTitle("My contact")
+                    .withCompany("PSB").withAddress("Nikolaiy Panova 51, 441").withMobilePhone("+79376473503")
+                    .withEmail("cloudmiin@gmail.com").withSecondEmail("cloudmiin1@gmail.com")
+                    .withThirdEmail("cloudmiin2@gmail.com").withHomePhone("+8462555555").withWorkPhone("+8463232255")
+                    .withFax("+744477").withHomepage("vk.com/test1").withBday("1").withBmonth("January")
+                    .withByear("1990").withAday("1").withAmonth("January").withAyear("1990").withNewGroup("test1")
+                    .withSecondAddress("Nikolaiy Panova 50, 442").withSecondHomePhone("+793764733655").withNotes("testNote"));
+
         }
     }
 

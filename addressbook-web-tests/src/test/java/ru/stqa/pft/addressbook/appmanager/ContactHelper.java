@@ -88,7 +88,7 @@ public class ContactHelper extends HelperBase {
 
         if (itsCreation) {
             try {
-                selectByText(By.name("new_group"), contactData.getNew_group());
+                selectByText(By.name("new_group"), contactData.getNewGroup());
             } catch (Exception NoSuchElementException) {
                 selectByIndex(By.name("new_group"), 0);
             }
@@ -145,7 +145,7 @@ public class ContactHelper extends HelperBase {
             String lastname = contactDataElements.get(1).getText();
             String firstname = contactDataElements.get(2).getText();
 
-            ContactData contact = new ContactData(id, firstname, lastname);
+            ContactData contact = new ContactData().withId(id).withFirstname(firstname).withLastname(lastname);
             contacts.add(contact);
         }
 

@@ -19,6 +19,7 @@ public class ContactData {
     private String homePhone;
     private String workPhone;
     private String fax;
+    private String allPhones;
     private String homepage;
     private String bday;
     private String bmonth;
@@ -166,6 +167,15 @@ public class ContactData {
 
     public String getNotes() {
         return notes;
+    }
+
+    public String getAllPhones() {
+        return allPhones;
+    }
+
+    public ContactData withAllPhones(String allPhones) {
+        this.allPhones = allPhones;
+        return this;
     }
 
     public ContactData withId(int id) {

@@ -6,12 +6,9 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.models.ContactData;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class ContactHelper extends HelperBase {
-    public final Comparator<? super ContactData> byId = Comparator.comparingInt(ContactData::getId);
 
     public ContactHelper(WebDriver wd) {
         super(wd);
@@ -107,8 +104,8 @@ public class ContactHelper extends HelperBase {
         click(By.linkText("add new"));
     }
 
-    public void selectContact(int index) {
-        wd.findElements(By.name("selected[]")).get(index).click();
+    public void selectContactById(int id) {
+        wd.findElement(By.cssSelector("input[value='"+ id +"']")).click();
     }
 
     public void deleteSelectedContact() {
@@ -119,8 +116,8 @@ public class ContactHelper extends HelperBase {
         wd.switchTo().alert().accept();
     }
 
-    public void initContactModification(int index) {
-        wd.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
+    public void initContactModification() {
+        click(By.xpath("//img[@alt='Edit']"));
     }
 
     public void submitContactModification() {
@@ -134,8 +131,8 @@ public class ContactHelper extends HelperBase {
         returnToHomePage();
     }
 
-    public List<ContactData> list() {
-        List<ContactData> contacts = new ArrayList<>();
+    public Set<ContactData> all() {
+        Set<ContactData> contacts = new HashSet<>();
         List<WebElement> contactElements = wd.findElements(By.cssSelector("tr"));
         contactElements.remove(0);
 
@@ -152,15 +149,16 @@ public class ContactHelper extends HelperBase {
         return contacts;
     }
 
-    public void modify(int index, ContactData contact) {
-        initContactModification(index);
+    public void modify(ContactData contact) {
+        selectContactById(contact.getId());
+        initContactModification();
         fillContactForm(contact, false);
         submitContactModification();
         returnToHomePage();
     }
 
-    public void delete(int index) {
-        selectContact(index);
+    public void delete(ContactData contact) {
+        selectContactById(contact.getId());
         deleteSelectedContact();
         if (isAlertPresent()) {
             confirmContactDeletion();

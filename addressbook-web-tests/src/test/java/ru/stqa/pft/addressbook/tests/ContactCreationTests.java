@@ -1,18 +1,18 @@
 package ru.stqa.pft.addressbook.tests;
 
-import java.nio.file.Path;
-import java.util.List;
-
 import org.testng.Assert;
-import org.testng.annotations.*;
+import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.models.ContactData;
+
+import java.nio.file.Path;
+import java.util.Set;
 
 public class ContactCreationTests extends TestBase {
 
     @Test
     public void testContactCreation() {
         app.goTo().homePage();
-        List<ContactData> before = app.contact().list();
+        Set<ContactData> before = app.contact().all();
         Path avatar = Path.of("src/test/resources/avatar.jpg");
         ContactData contact = new ContactData().withFirstname("Alexey").withMiddlename("Vladimirivich").withLastname("Krasnoschekov")
                 .withNickname("ramtary").withPhoto(avatar.toAbsolutePath().toString()).withTitle("My contact")
@@ -23,14 +23,11 @@ public class ContactCreationTests extends TestBase {
                 .withByear("1990").withAday("1").withAmonth("January").withAyear("1990").withNewGroup("test1")
                 .withSecondAddress("Nikolaiy Panova 50, 442").withSecondHomePhone("+793764733655").withNotes("testNote");
         app.contact().create(contact);
-        List<ContactData> after = app.contact().list();
+        Set<ContactData> after = app.contact().all();
         Assert.assertEquals(after.size(), before.size() + 1);
 
-        before.add(new ContactData().withId(after.stream().max(app.contact().byId).get().getId())
-                .withFirstname(after.stream().max(app.contact().byId).get().getFirstname())
-                .withLastname(after.stream().max(app.contact().byId).get().getLastname()));
-        before.sort(app.contact().byId);
-        after.sort(app.contact().byId);
+        contact.withId(after.stream().mapToInt(ContactData::getId).max().getAsInt());
+        before.add(contact);
         Assert.assertEquals(before, after);
 
     }

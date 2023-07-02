@@ -6,14 +6,14 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.models.ContactData;
 
 import java.nio.file.Path;
-import java.util.List;
+import java.util.Set;
 
 public class ContactModificationTests extends TestBase {
     @BeforeMethod
     public void ensurePreconditions() {
         app.goTo().homePage();
         Path avatar = Path.of("src/test/resources/avatar_mod.jpg");
-        if (app.contact().list().size() == 0) {
+        if (app.contact().all().size() == 0) {
             app.contact().create(new ContactData().withFirstname("Alexey").withMiddlename("Vladimirivich").withLastname("Krasnoschekov")
                     .withNickname("ramtary").withPhoto(avatar.toAbsolutePath().toString()).withTitle("My contact")
                     .withCompany("PSB").withAddress("Nikolaiy Panova 51, 441").withMobilePhone("+79376473503")
@@ -27,17 +27,15 @@ public class ContactModificationTests extends TestBase {
 
     @Test
     public void contactModificationTest() {
-        List<ContactData> before = app.contact().list();
-        int index = before.size() - 1;
-        ContactData contact = new ContactData().withId(before.get(index).getId()).withFirstname("Alex").withLastname("Kras");
-        app.contact().modify(index, contact);
-        List<ContactData> after = app.contact().list();
+        Set<ContactData> before = app.contact().all();
+        ContactData modifiedContact = before.iterator().next();
+        ContactData contact = new ContactData().withId(modifiedContact.getId()).withFirstname("Alex").withLastname("Kras");
+        app.contact().modify(contact);
+        Set<ContactData> after = app.contact().all();
         Assert.assertEquals(after.size(), before.size());
 
-        before.remove(index);
+        before.remove(modifiedContact);
         before.add(contact);
-        before.sort(app.contact().byId);
-        after.sort(app.contact().byId);
         Assert.assertEquals(before, after);
     }
 }

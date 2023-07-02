@@ -7,9 +7,11 @@ import org.testng.Assert;
 import ru.stqa.pft.addressbook.models.ContactData;
 import ru.stqa.pft.addressbook.models.Contacts;
 
-import java.util.*;
+import java.util.List;
 
 public class ContactHelper extends HelperBase {
+
+    private Contacts contactCache = null;
 
     public ContactHelper(WebDriver wd) {
         super(wd);
@@ -129,11 +131,16 @@ public class ContactHelper extends HelperBase {
         initContactCreation();
         fillContactForm(contactData, true);
         submitContactCreation();
+        contactCache = null;
         returnToHomePage();
     }
 
     public Contacts all() {
-        Contacts contacts = new Contacts();
+        if (contactCache != null) {
+            return new Contacts(contactCache);
+        }
+
+        contactCache = new Contacts();
         List<WebElement> contactElements = wd.findElements(By.cssSelector("tr"));
         contactElements.remove(0);
 
@@ -144,22 +151,24 @@ public class ContactHelper extends HelperBase {
             String firstname = contactDataElements.get(2).getText();
 
             ContactData contact = new ContactData().withId(id).withFirstname(firstname).withLastname(lastname);
-            contacts.add(contact);
+            contactCache.add(contact);
         }
 
-        return contacts;
+        return new Contacts(contactCache);
     }
 
     public void modify(ContactData contact) {
         initContactModification(contact.getId());
         fillContactForm(contact, false);
         submitContactModification();
+        contactCache = null;
         returnToHomePage();
     }
 
     public void delete(ContactData contact) {
         selectContactById(contact.getId());
         deleteSelectedContact();
+        contactCache = null;
         if (isAlertPresent()) {
             confirmContactDeletion();
         }

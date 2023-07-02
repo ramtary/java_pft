@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import ru.stqa.pft.addressbook.models.ContactData;
+import ru.stqa.pft.addressbook.models.Contacts;
 
 import java.util.*;
 
@@ -116,8 +117,8 @@ public class ContactHelper extends HelperBase {
         wd.switchTo().alert().accept();
     }
 
-    public void initContactModification() {
-        click(By.xpath("//img[@alt='Edit']"));
+    public void initContactModification(int id) {
+        wd.findElement(By.cssSelector("a[href='edit.php?id="+ id +"']")).click();
     }
 
     public void submitContactModification() {
@@ -131,8 +132,8 @@ public class ContactHelper extends HelperBase {
         returnToHomePage();
     }
 
-    public Set<ContactData> all() {
-        Set<ContactData> contacts = new HashSet<>();
+    public Contacts all() {
+        Contacts contacts = new Contacts();
         List<WebElement> contactElements = wd.findElements(By.cssSelector("tr"));
         contactElements.remove(0);
 
@@ -150,8 +151,7 @@ public class ContactHelper extends HelperBase {
     }
 
     public void modify(ContactData contact) {
-        selectContactById(contact.getId());
-        initContactModification();
+        initContactModification(contact.getId());
         fillContactForm(contact, false);
         submitContactModification();
         returnToHomePage();

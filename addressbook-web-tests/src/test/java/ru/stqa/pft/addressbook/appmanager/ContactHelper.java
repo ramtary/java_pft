@@ -154,10 +154,11 @@ public class ContactHelper extends HelperBase {
             String lastname = contactDataCells.get(1).getText();
             String firstname = contactDataCells.get(2).getText();
             String address = contactDataCells.get(3).getText();
+            String allEmails = contactDataCells.get(4).getText();
             String allPhones = contactDataCells.get(5).getText();
 
             contactCache.add(new ContactData().withId(id).withFirstname(firstname).withLastname(lastname)
-                    .withAddress(address).withAllPhones(allPhones));
+                    .withAddress(address).withAllEmails(allEmails).withAllPhones(allPhones));
         }
 
         return new Contacts(contactCache);
@@ -185,11 +186,16 @@ public class ContactHelper extends HelperBase {
         String firstname = wd.findElement(By.name("firstname")).getAttribute("value");
         String lastname = wd.findElement(By.name("lastname")).getAttribute("value");
         String address = wd.findElement(By.name("address")).getAttribute("value");
+        String email = wd.findElement(By.name("email")).getAttribute("value");
+        String secondEmail = wd.findElement(By.name("email2")).getAttribute("value");
+        String thirdEmail = wd.findElement(By.name("email3")).getAttribute("value");
         String home = wd.findElement(By.name("home")).getAttribute("value");
         String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
         String work = wd.findElement(By.name("work")).getAttribute("value");
+        String secondHomePhone = wd.findElement(By.name("phone2")).getAttribute("value");
         wd.navigate().back();
         return new ContactData().withId(contact.getId()).withFirstname(firstname).withLastname(lastname)
-                .withAddress(address).withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work);
+                .withAddress(address).withEmail(email).withSecondEmail(secondEmail).withThirdEmail(thirdEmail)
+                .withHomePhone(home).withMobilePhone(mobile).withWorkPhone(work).withSecondHomePhone(secondHomePhone);
     }
 }

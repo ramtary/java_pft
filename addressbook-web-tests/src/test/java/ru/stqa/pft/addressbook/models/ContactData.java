@@ -16,6 +16,7 @@ public class ContactData {
     private String email;
     private String secondEmail;
     private String thirdEmail;
+    private String allEmails;
     private String homePhone;
     private String workPhone;
     private String fax;
@@ -171,6 +172,15 @@ public class ContactData {
 
     public String getAllPhones() {
         return allPhones;
+    }
+
+    public String getAllEmails() {
+        return allEmails;
+    }
+
+    public ContactData withAllEmails(String allEmails) {
+        this.allEmails = allEmails;
+        return this;
     }
 
     public ContactData withAllPhones(String allPhones) {

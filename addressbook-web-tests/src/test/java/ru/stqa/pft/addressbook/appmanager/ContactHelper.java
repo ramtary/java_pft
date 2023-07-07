@@ -38,7 +38,7 @@ public class ContactHelper extends HelperBase {
 
         type(By.name("nickname"), contactData.getNickname());
 
-        addPhoto(By.name("photo"), contactData.getPhoto());
+        attach(By.name("photo"), contactData.getPhoto());
 
         type(By.name("title"), contactData.getTitle());
 
@@ -65,13 +65,13 @@ public class ContactHelper extends HelperBase {
         try {
             selectByText(By.name("bday"), contactData.getBday());
         } catch (Exception NoSuchElementException) {
-            selectByIndex(By.name("bday"), 0);
+            selectDefault(By.name("bday"));
         }
 
         try {
             selectByText(By.name("bmonth"), contactData.getBmonth());
         } catch (Exception NoSuchElementException) {
-            selectByIndex(By.name("bmonth"), 0);
+            selectDefault(By.name("bmonth"));
         }
 
         type(By.name("byear"), contactData.getByear());
@@ -79,13 +79,13 @@ public class ContactHelper extends HelperBase {
         try {
             selectByText(By.name("aday"), contactData.getAday());
         } catch (Exception NoSuchElementException) {
-            selectByIndex(By.name("aday"), 0);
+            selectDefault(By.name("aday"));
         }
 
         try {
             selectByText(By.name("amonth"), contactData.getAmonth());
         } catch (Exception NoSuchElementException) {
-            selectByIndex(By.name("amonth"), 0);
+            selectDefault(By.name("amonth"));
         }
 
         type(By.name("ayear"), contactData.getAyear());
@@ -94,7 +94,7 @@ public class ContactHelper extends HelperBase {
             try {
                 selectByText(By.name("new_group"), contactData.getNewGroup());
             } catch (Exception NoSuchElementException) {
-                selectByIndex(By.name("new_group"), 0);
+                selectDefault(By.name("new_group"));
             }
         } else {
             Assert.assertFalse(isElementPresent(By.name("new_group")));

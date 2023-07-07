@@ -4,7 +4,7 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.models.ContactData;
 import ru.stqa.pft.addressbook.models.Contacts;
 
-import java.nio.file.Path;
+import java.io.File;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -15,9 +15,9 @@ public class ContactCreationTests extends TestBase {
     public void testContactCreation() {
         app.goTo().homePage();
         Contacts before = app.contact().all();
-        Path avatar = Path.of("src/test/resources/avatar.jpg");
+        File avatar = new File("src/test/resources/avatar.jpg");
         ContactData contact = new ContactData().withFirstname("Alexey").withMiddlename("Vladimirivich").withLastname("Krasnoschekov")
-                .withNickname("ramtary").withPhoto(avatar.toAbsolutePath().toString()).withTitle("My contact")
+                .withNickname("ramtary").withPhoto(avatar).withTitle("My contact")
                 .withCompany("PSB").withAddress("Nikolaiy Panova 51, 441").withMobilePhone("+79376473503")
                 .withEmail("cloudmiin@gmail.com").withSecondEmail("cloudmiin1@gmail.com")
                 .withThirdEmail("cloudmiin2@gmail.com").withHomePhone("+8462555555").withWorkPhone("+8463232255")
@@ -37,9 +37,9 @@ public class ContactCreationTests extends TestBase {
     public void testBadContactCreation() {
         app.goTo().homePage();
         Contacts before = app.contact().all();
-        Path avatar = Path.of("src/test/resources/avatar.jpg");
+        File avatar = new File("src/test/resources/avatar.jpg");
         ContactData contact = new ContactData().withFirstname("Alexey'").withMiddlename("Vladimirivich").withLastname("Krasnoschekov")
-                .withNickname("ramtary").withPhoto(avatar.toAbsolutePath().toString()).withTitle("My contact")
+                .withNickname("ramtary").withPhoto(avatar).withTitle("My contact")
                 .withCompany("PSB").withAddress("Nikolaiy Panova 51, 441").withMobilePhone("+79376473503")
                 .withEmail("cloudmiin@gmail.com").withSecondEmail("cloudmiin1@gmail.com")
                 .withThirdEmail("cloudmiin2@gmail.com").withHomePhone("+8462555555").withWorkPhone("+8463232255")

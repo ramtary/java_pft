@@ -30,6 +30,7 @@ public class ContactCreationTests extends TestBase implements JsonDeserializer<F
             json += line;
             line = reader.readLine();
         }
+        reader.close();
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(File.class, new ContactCreationTests())
                 .create();

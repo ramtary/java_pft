@@ -27,6 +27,7 @@ public class GroupCreationTests extends TestBase {
             xml += line;
             line = reader.readLine();
         }
+        reader.close();
         XStream xStream = new XStream();
         xStream.processAnnotations(GroupData.class);
         xStream.allowTypes(new Class[]{GroupData.class});
@@ -43,6 +44,7 @@ public class GroupCreationTests extends TestBase {
             json += line;
             line = reader.readLine();
         }
+        reader.close();
         Gson gson = new Gson();
         List<GroupData> groups = gson.fromJson(json, new TypeToken<List<GroupData>>(){}.getType());
         return groups.stream().map((g) -> new Object[] {g}).collect(Collectors.toList()).iterator();

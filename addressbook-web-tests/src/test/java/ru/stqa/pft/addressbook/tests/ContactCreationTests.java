@@ -23,14 +23,14 @@ public class ContactCreationTests extends TestBase implements JsonDeserializer<F
 
     @DataProvider
     public Iterator<Object[]> validContactsFromJson() throws IOException {
-        BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/contacts.json"));
         String json = "";
-        String line = reader.readLine();
-        while (line != null) {
-            json += line;
-            line = reader.readLine();
+        try (BufferedReader reader = new BufferedReader(new FileReader("src/test/resources/contacts.json"))) {
+            String line = reader.readLine();
+            while (line != null) {
+                json += line;
+                line = reader.readLine();
+            }
         }
-        reader.close();
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(File.class, new ContactCreationTests())
                 .create();

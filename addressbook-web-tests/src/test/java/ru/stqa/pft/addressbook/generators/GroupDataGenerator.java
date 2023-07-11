@@ -38,11 +38,20 @@ public class GroupDataGenerator {
 
     private void run() throws IOException {
         List<GroupData> groups = generateGroups(count);
+
         switch (format) {
-            case "csv" -> saveAsCsv(groups, new File(file));
-            case "xml" -> saveAsXml(groups, new File(file));
-            case "json" -> saveAsJson(groups, new File(file));
-            default -> System.out.println("Unrecognized format" + format);
+            case ("csv") :
+                saveAsCsv(groups, new File(file));
+                break;
+            case ("xml") :
+                saveAsXml(groups, new File(file));
+                break;
+            case ("json") :
+                saveAsJson(groups, new File(file));
+                break;
+            default :
+                System.out.println("Unrecognized format" + format);
+                break;
         }
     }
 

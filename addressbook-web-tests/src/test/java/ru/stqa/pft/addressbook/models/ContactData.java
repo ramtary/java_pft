@@ -1,67 +1,100 @@
 package ru.stqa.pft.addressbook.models;
 
 import com.google.gson.annotations.Expose;
+import jakarta.persistence.*;
 
 import java.io.File;
 import java.util.Objects;
 
+@Entity
+@Table(name = "addressbook")
 public class ContactData {
+    @Id
+    @Column(name = "id")
     private int id = Integer.MAX_VALUE;
     @Expose
+    @Column(name = "firstname")
     private String firstname;
     @Expose
+    @Transient
     private String middlename;
     @Expose
+    @Column(name = "lastname")
     private String lastname;
     @Expose
+    @Transient
     private String nickname;
     @Expose
-    private File photo;
+    @Column(name = "photo")
+    private String photo;
     @Expose
+    @Transient
     private String title;
     @Expose
+    @Transient
     private String company;
     @Expose
+    @Transient
     private String address;
     @Expose
+    @Column(name = "mobile")
     private String mobilePhone;
     @Expose
+    @Transient
     private String email;
     @Expose
+    @Transient
     private String secondEmail;
     @Expose
+    @Transient
     private String thirdEmail;
     @Expose
+    @Transient
     private String allEmails;
     @Expose
+    @Column(name = "home")
     private String homePhone;
     @Expose
+    @Column(name = "work")
     private String workPhone;
     @Expose
+    @Transient
     private String fax;
     @Expose
+    @Transient
     private String allPhones;
     @Expose
+    @Transient
     private String homepage;
     @Expose
+    @Transient
     private String bday;
     @Expose
+    @Transient
     private String bmonth;
     @Expose
+    @Transient
     private String byear;
     @Expose
+    @Transient
     private String aday;
     @Expose
+    @Transient
     private String amonth;
     @Expose
+    @Transient
     private String ayear;
     @Expose
-    private String newGroup;
+    @Transient
+    private String group;
     @Expose
+    @Transient
     private String secondAddress;
     @Expose
+    @Transient
     private String secondHomePhone;
     @Expose
+    @Transient
     private String notes;
 
     @Override
@@ -114,7 +147,7 @@ public class ContactData {
     }
 
     public File getPhoto() {
-        return photo;
+        return new File(photo);
     }
 
     public String getTitle() {
@@ -185,8 +218,8 @@ public class ContactData {
         return ayear;
     }
 
-    public String getNewGroup() {
-        return newGroup;
+    public String getGroup() {
+        return group;
     }
 
     public String getSecondAddress() {
@@ -245,7 +278,7 @@ public class ContactData {
     }
 
     public ContactData withPhoto(File photo) {
-        this.photo = photo;
+        this.photo = photo.getPath();
         return this;
     }
 
@@ -334,8 +367,8 @@ public class ContactData {
         return this;
     }
 
-    public ContactData withNewGroup(String newGroup) {
-        this.newGroup = newGroup;
+    public ContactData withGroup(String group) {
+        this.group = group;
         return this;
     }
 

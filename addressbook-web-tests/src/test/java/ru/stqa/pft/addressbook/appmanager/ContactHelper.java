@@ -92,7 +92,7 @@ public class ContactHelper extends HelperBase {
 
         if (itsCreation) {
             try {
-                selectByText(By.name("new_group"), contactData.getNewGroup());
+                selectByText(By.name("new_group"), contactData.getGroup());
             } catch (Exception NoSuchElementException) {
                 selectDefault(By.name("new_group"));
             }

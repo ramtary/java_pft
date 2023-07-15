@@ -72,7 +72,7 @@ public class ContactDataGenerator implements JsonSerializer<File> {
                     .withHomePhone(String.format("+%s%s%s", i, i, i)).withWorkPhone(String.format("+%s%s%s%s", i, i, i, i))
                     .withFax(String.format("+%s", i)).withHomepage(String.format("vk.com/%s", i)).withBday(Integer.toString(day))
                     .withBmonth("January").withByear(Integer.toString(year)).withAday(Integer.toString(day)).withAmonth("January")
-                    .withAyear(Integer.toString(year)).withNewGroup(String.format("test %s", i))
+                    .withAyear(Integer.toString(year)).withGroup(String.format("test %s", i))
                     .withSecondAddress(String.format("secondAddress %s", i)).withSecondHomePhone(String.format("+%s%s", i, i))
                     .withNotes(String.format("note %s", i)));
         }

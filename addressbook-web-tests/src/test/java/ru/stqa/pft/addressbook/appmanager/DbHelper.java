@@ -5,26 +5,20 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import ru.stqa.pft.addressbook.models.ContactData;
+import ru.stqa.pft.addressbook.models.Contacts;
 import ru.stqa.pft.addressbook.models.GroupData;
 import ru.stqa.pft.addressbook.models.Groups;
 
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.List;
-import java.util.Properties;
 
 public class DbHelper {
-
-    private final Properties properties;
     private final SessionFactory sessionFactory;
 
-    public DbHelper() throws IOException {
-        properties = new Properties();
-        String target = System.getProperty("target", "local");
-        properties.load(new FileReader(String.format("src/test/resources/%s.properties", target)));
+    public DbHelper(String config) {
 
         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure(properties.getProperty("hb.config"))
+                .configure(config)
                 .build();
         sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
     }
@@ -37,5 +31,15 @@ public class DbHelper {
         session.close();
 
         return new Groups(result);
+    }
+
+    public Contacts contacts() {
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        List<ContactData> result = session.createQuery("from ContactData").list();
+        session.getTransaction().commit();
+        session.close();
+
+        return new Contacts(result);
     }
 }

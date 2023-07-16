@@ -41,11 +41,11 @@ public class ContactCreationTests extends TestBase implements JsonDeserializer<F
     @Test(dataProvider = "validContactsFromJson")
     public void testContactCreation(ContactData contact) {
         app.goTo().homePage();
-        Contacts before = app.contact().all();
+        Contacts before = app.db().contacts();
         app.contact().create(contact);
 
         assertThat(app.contact().count(), equalTo(before.size() + 1));
-        Contacts after = app.contact().all();
+        Contacts after = app.db().contacts();
 
         assertThat(after, equalTo(
                 before.withAdded(contact.withId(after.stream().mapToInt(ContactData::getId).max().getAsInt()))));
@@ -54,7 +54,7 @@ public class ContactCreationTests extends TestBase implements JsonDeserializer<F
     @Test
     public void testBadContactCreation() {
         app.goTo().homePage();
-        Contacts before = app.contact().all();
+        Contacts before = app.db().contacts();
         File avatar = new File("src/test/resources/avatar.jpg");
         ContactData contact = new ContactData().withFirstname("Alexey'").withMiddlename("Vladimirivich").withLastname("Krasnoschekov")
                 .withNickname("ramtary").withPhoto(avatar).withTitle("My contact")
@@ -67,7 +67,7 @@ public class ContactCreationTests extends TestBase implements JsonDeserializer<F
         app.contact().create(contact);
 
         assertThat(app.contact().count(), equalTo(before.size()));
-        Contacts after = app.contact().all();
+        Contacts after = app.db().contacts();
 
         assertThat(after, equalTo(before));
     }

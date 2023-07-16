@@ -1,7 +1,0 @@
-23:33:54.669 [main] DEBUG org.jboss.logging -- Logging Provider: org.jboss.logging.Slf4jLoggerProvider
-23:33:54.677 [main] DEBUG o.h.i.i.IntegratorServiceImpl -- Adding Integrator [org.hibernate.boot.beanvalidation.BeanValidationIntegrator].
-23:33:54.679 [main] DEBUG o.h.i.i.IntegratorServiceImpl -- Adding Integrator [org.hibernate.cache.internal.CollectionCacheInvalidator].
-23:33:54.691 [main] INFO  org.hibernate.Version -- HHH000412: Hibernate ORM core version 6.2.6.Final
-23:33:54.692 [main] DEBUG org.hibernate.cfg.Environment -- HHH000206: hibernate.properties not found
-23:33:54.693 [main] INFO  org.hibernate.cfg.Environment -- HHH000406: Using bytecode reflection optimizer
-23:33:54.710 [main] INFO  r.s.pft.addressbook.tests.TestBase -- Stop test groupModificationTest

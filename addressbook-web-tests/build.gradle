@@ -27,6 +27,9 @@ tasks.register('testGroups', Test) {
     if (project.hasProperty("target")) {
         systemProperty 'target', "${target}"
     }
+    if (project.hasProperty("verifyUI")) {
+        systemProperty 'verifyUI', "${verifyUI}"
+    }
 }
 
 tasks.register('testContacts', Test) {
@@ -38,5 +41,8 @@ tasks.register('testContacts', Test) {
     }
     if (project.hasProperty("target")) {
         systemProperty 'target', "${target}"
+    }
+    if (project.hasProperty("verifyUI")) {
+        systemProperty 'verifyUI', "${verifyUI}"
     }
 }

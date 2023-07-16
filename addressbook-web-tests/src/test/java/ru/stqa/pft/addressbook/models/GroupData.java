@@ -24,6 +24,9 @@ public class GroupData {
     @Expose
     @Column(name = "group_header")
     private String header;
+    @Expose
+    @Column(name = "group_footer")
+    private String footer;
 
     @Override
     public boolean equals(Object o) {
@@ -46,10 +49,6 @@ public class GroupData {
         result = 31 * result + (footer != null ? footer.hashCode() : 0);
         return result;
     }
-
-    @Expose
-    @Column(name = "group_footer")
-    private String footer;
 
     @Override
     public String toString() {

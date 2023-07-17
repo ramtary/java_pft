@@ -4,7 +4,9 @@ import com.google.gson.annotations.Expose;
 import jakarta.persistence.*;
 
 import java.io.File;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "addressbook")
@@ -85,9 +87,6 @@ public class ContactData {
     @Column(name = "ayear")
     private String ayear;
     @Expose
-    @Transient
-    private String group;
-    @Expose
     @Column(name = "address2")
     private String secondAddress;
     @Expose
@@ -96,6 +95,10 @@ public class ContactData {
     @Expose
     @Column(name = "notes")
     private String notes;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "address_in_groups",
+            joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+    private Set<GroupData> groups = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
@@ -264,10 +267,6 @@ public class ContactData {
         return ayear;
     }
 
-    public String getGroup() {
-        return group;
-    }
-
     public String getSecondAddress() {
         return secondAddress;
     }
@@ -286,6 +285,10 @@ public class ContactData {
 
     public String getAllEmails() {
         return allEmails;
+    }
+
+    public Groups getGroups() {
+        return new Groups(groups);
     }
 
     public ContactData withAllEmails(String allEmails) {
@@ -413,11 +416,6 @@ public class ContactData {
         return this;
     }
 
-    public ContactData withGroup(String group) {
-        this.group = group;
-        return this;
-    }
-
     public ContactData withSecondAddress(String secondAddress) {
         this.secondAddress = secondAddress;
         return this;
@@ -431,5 +429,9 @@ public class ContactData {
     public ContactData withNotes(String notes) {
         this.notes = notes;
         return this;
+    }
+
+    public ContactData inGroup(GroupData next) {
+        return null;
     }
 }

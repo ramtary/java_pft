@@ -6,6 +6,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.models.ContactData;
 import ru.stqa.pft.addressbook.models.Contacts;
+import ru.stqa.pft.addressbook.models.Groups;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -40,9 +41,10 @@ public class ContactCreationTests extends TestBase implements JsonDeserializer<F
 
     @Test(dataProvider = "validContactsFromJson")
     public void testContactCreation(ContactData contact) {
+        Groups groups = app.db().groups();
         app.goTo().homePage();
         Contacts before = app.db().contacts();
-        app.contact().create(contact);
+        app.contact().create(contact.inGroup(groups.iterator().next()));
 
         assertThat(app.contact().count(), equalTo(before.size() + 1));
         Contacts after = app.db().contacts();
@@ -63,7 +65,7 @@ public class ContactCreationTests extends TestBase implements JsonDeserializer<F
                 .withEmail("cloudmiin@gmail.com").withSecondEmail("cloudmiin1@gmail.com")
                 .withThirdEmail("cloudmiin2@gmail.com").withHomePhone("+8462555555").withWorkPhone("+8463232255")
                 .withFax("+744477").withHomepage("vk.com/test1").withBday("1").withBmonth("January")
-                .withByear("1990").withAday("1").withAmonth("January").withAyear("1990").withGroup("test1")
+                .withByear("1990").withAday("1").withAmonth("January").withAyear("1990")
                 .withSecondAddress("Nikolaiy Panova 50, 442").withSecondHomePhone("+793764733655").withNotes("testNote");
         app.contact().create(contact);
 

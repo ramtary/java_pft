@@ -91,11 +91,7 @@ public class ContactHelper extends HelperBase {
         type(By.name("ayear"), contactData.getAyear());
 
         if (itsCreation) {
-            try {
-                selectByText(By.name("new_group"), contactData.getGroup());
-            } catch (Exception NoSuchElementException) {
-                selectDefault(By.name("new_group"));
-            }
+            selectDefault(By.name("new_group"));
         } else {
             Assert.assertFalse(isElementPresent(By.name("new_group")));
         }

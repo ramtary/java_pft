@@ -11,13 +11,13 @@ import ru.stqa.pft.addressbook.models.Groups;
 import java.io.File;
 import java.util.stream.Collectors;
 
-public class ContactAddToGroupTests extends TestBase{
+public class ContactActionsWithGroupTests extends TestBase {
 
     @BeforeMethod
     public void ensurePreconditions() {
-        app.goTo().homePage();
         File avatar = new File("src/test/resources/avatar.jpg");
         if (app.db().contacts().size() == 0) {
+            app.goTo().homePage();
             app.contact().create(new ContactData().withFirstname("Alexey").withMiddlename("Vladimirivich").withLastname("Krasnoschekov")
                     .withNickname("ramtary").withPhoto(avatar).withTitle("My contact")
                     .withCompany("PSB").withAddress("Nikolaiy Panova 51, 441").withMobilePhone("+79376473503")
@@ -29,8 +29,8 @@ public class ContactAddToGroupTests extends TestBase{
 
         }
 
-        app.goTo().groupPage();
         if (app.db().groups().size() == 0) {
+            app.goTo().groupPage();
             app.group().create(new GroupData().withName("test1"));
         }
     }
@@ -39,21 +39,54 @@ public class ContactAddToGroupTests extends TestBase{
     public void testContactAddToGroup() {
         Groups groups = app.db().groups();
         Contacts before = app.db().contacts();
-        int contactId = before.iterator().next().getId();
+        ContactData contactForAdd = before.iterator().next();
+        int contactId = contactForAdd.getId();
         int groupId = groups.iterator().next().getId();
+
+        // если контакт в группе, удалим его
+        if (isGroupContainsContact(groupId, contactForAdd)) {
+            app.goTo().homePage();
+            app.contact().removeFromGroup(contactId, groupId);
+        }
 
         app.goTo().homePage();
         app.contact().addToGroup(contactId, groupId);
 
         Contacts after = app.db().contacts();
 
-        ContactData contactAddedToGroup = after.stream().filter(c -> c.getId() == contactId)
-                .collect(Collectors.toSet()).iterator().next();
+        Assert.assertTrue(isGroupContainsContact(groupId, getMovedContact(contactId, after)));
+    }
 
-        Groups contactGroups = contactAddedToGroup.getGroups();
+    @Test
+    public void testContactRemoveFromGroup() {
+        Groups groups = app.db().groups();
+        Contacts before = app.db().contacts();
+        ContactData contactForRemove = before.iterator().next();
+        int contactId = contactForRemove.getId();
+        int groupId = groups.iterator().next().getId();
 
-        Assert.assertTrue(contactGroups.stream()
+        // если контакта нет в группе, добавим его
+        if (!isGroupContainsContact(groupId, contactForRemove)) {
+            app.goTo().homePage();
+            app.contact().addToGroup(contactId, groupId);
+        }
+
+        app.goTo().homePage();
+        app.contact().removeFromGroup(contactId, groupId);
+
+        Contacts after = app.db().contacts();
+
+        Assert.assertFalse(isGroupContainsContact(groupId, getMovedContact(contactId, after)));
+    }
+
+    private static boolean isGroupContainsContact(int groupId, ContactData contact) {
+        return contact.getGroups().stream()
                 .map((g) -> new GroupData().withId(g.getId())).collect(Collectors.toSet())
-                .contains(new GroupData().withId(groupId)));
+                .contains(new GroupData().withId(groupId));
+    }
+
+    private static ContactData getMovedContact(int contactId, Contacts contacts) {
+        return contacts.stream().filter(c -> c.getId() == contactId)
+                .collect(Collectors.toSet()).iterator().next();
     }
 }

@@ -111,15 +111,23 @@ public class ContactHelper extends HelperBase {
     }
 
     public void selectContactById(int id) {
-        click(By.cssSelector(String.format("input[value='%s']", id)));
+        click(By.cssSelector(String.format("input[name='selected[]'][value='%s']", id)));
     }
 
     private void selectGroupForAddById(int groupId) {
         click(By.cssSelector(String.format("select[name='to_group'] > option[value='%s']", groupId)));
     }
 
+    private void selectGroupPageById(int groupId) {
+        click(By.cssSelector(String.format("select[name='group'] > option[value='%s']", groupId)));
+    }
+
     private void addSelectedContactToGroup() {
         click(By.xpath("//input[@value='Add to']"));
+    }
+
+    private void removeSelectedContactFromGroup() {
+        click(By.xpath("//input[@name='remove']"));
     }
 
     public void deleteSelectedContact() {
@@ -210,6 +218,11 @@ public class ContactHelper extends HelperBase {
         selectContactById(contactId);
         selectGroupForAddById(groupId);
         addSelectedContactToGroup();
-        contactCache = null;
+    }
+
+    public void removeFromGroup(int contactId, int groupId) {
+        selectGroupPageById(groupId);
+        selectContactById(contactId);
+        removeSelectedContactFromGroup();
     }
 }

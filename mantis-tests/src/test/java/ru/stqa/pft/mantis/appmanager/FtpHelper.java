@@ -1,7 +1,6 @@
 package ru.stqa.pft.mantis.appmanager;
 
 import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPSClient;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,7 +13,7 @@ public class FtpHelper {
 
     public FtpHelper(ApplicationManager app) {
         this.app = app;
-        ftp = new FTPSClient();
+        ftp = new FTPClient();
     }
 
     public void upload(File file, String target, String backup) throws IOException {

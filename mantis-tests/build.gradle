@@ -14,6 +14,8 @@ dependencies {
     implementation group: 'commons-net', name: 'commons-net', version: '3.4'
     implementation group: 'org.subethamail', name: 'subethasmtp', version: '3.1.7'
     implementation group: 'ru.lanwen.verbalregex', name: 'java-verbal-expressions', version: '1.8'
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.33'
+    implementation group: 'org.hibernate', name: 'hibernate-core', version: '6.2.6.Final'
 }
 
 test {

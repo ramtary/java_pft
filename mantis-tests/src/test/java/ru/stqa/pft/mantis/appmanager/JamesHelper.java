@@ -1,6 +1,7 @@
 package ru.stqa.pft.mantis.appmanager;
 
 import org.apache.commons.net.telnet.TelnetClient;
+import ru.lanwen.verbalregex.VerbalExpression;
 import ru.stqa.pft.mantis.model.MailMessage;
 
 import javax.mail.*;
@@ -20,12 +21,14 @@ public class JamesHelper {
 
     private final Session mailSession;
     private Store store;
-    private String mailserver;
+    private final String mailserver;
 
     public JamesHelper(ApplicationManager app) {
         this.app = app;
         telnet = new TelnetClient();
         mailSession = Session.getDefaultInstance(System.getProperties());
+        // вынес инициализацию в конструктор, для корректной работы drainEmail, если он вызывается первым
+        mailserver = app.getProperty("mailserver.host");
     }
 
     public boolean doesUserExist(String name) {
@@ -33,6 +36,7 @@ public class JamesHelper {
         write("verify " + name);
         String result = readUntil("exist");
         closeTelnetSession();
+        assert result != null;
         return result.trim().equals("User " + name + " exist");
     }
 
@@ -51,7 +55,6 @@ public class JamesHelper {
     }
 
     private void initTelnetSession() {
-        mailserver = app.getProperty("mailserver.host");
         int port = Integer.parseInt(app.getProperty("mailserver.port"));
         String login = app.getProperty("mailserver.adminlogin");
         String password = app.getProperty("mailserver.adminpassword");
@@ -163,5 +166,11 @@ public class JamesHelper {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public String findLink(List<MailMessage> mailMessages, String email) {
+        MailMessage mailMessage = mailMessages.stream().filter((m) -> m.to.equals(email)).findFirst().get();
+        VerbalExpression regex = VerbalExpression.regex().find("http://").nonSpace().oneOrMore().build();
+        return regex.getText(mailMessage.text);
     }
 }

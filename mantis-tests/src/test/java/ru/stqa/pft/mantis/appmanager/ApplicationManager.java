@@ -20,6 +20,8 @@ public class ApplicationManager {
     private FtpHelper ftp;
     private MailHelper mailHelper;
     private JamesHelper jamesHelper;
+    private PasswordHelper passwordHelper;
+    private DbHelper dbHelper;
 
     public ApplicationManager(String browser) throws IOException {
         this.browser = browser;
@@ -88,4 +90,20 @@ public class ApplicationManager {
         }
         return jamesHelper;
     }
+
+    public PasswordHelper password() {
+        if (passwordHelper == null) {
+            passwordHelper = new PasswordHelper(this);
+        }
+        return passwordHelper;
+    }
+
+    public DbHelper db() {
+        if (dbHelper == null) {
+            dbHelper = new DbHelper(this.getProperty("hb.config"));
+        }
+        return dbHelper;
+    }
+    
+
 }

@@ -22,6 +22,7 @@ public class ApplicationManager {
     private JamesHelper jamesHelper;
     private PasswordHelper passwordHelper;
     private DbHelper dbHelper;
+    private SoapHelper soapHelper;
 
     public ApplicationManager(String browser) throws IOException {
         this.browser = browser;
@@ -103,6 +104,13 @@ public class ApplicationManager {
             dbHelper = new DbHelper(this.getProperty("hb.config"));
         }
         return dbHelper;
+    }
+
+    public SoapHelper soap() {
+        if (soapHelper == null) {
+            soapHelper = new SoapHelper(this);
+        }
+        return soapHelper;
     }
     
 

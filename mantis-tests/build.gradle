@@ -17,6 +17,8 @@ dependencies {
     implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.33'
     implementation group: 'org.hibernate', name: 'hibernate-core', version: '6.2.6.Final'
     implementation group: 'biz.futureware.mantis', name: 'mantis-axis-soap-client', version: '1.2.19'
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.10.1'
+    implementation group: 'io.rest-assured', name: 'rest-assured', version: '5.3.1'
 }
 
 test {

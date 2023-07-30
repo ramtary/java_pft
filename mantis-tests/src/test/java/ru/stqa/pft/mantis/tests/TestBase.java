@@ -46,4 +46,15 @@ public class TestBase {
         Issue issue = app.soap().getIssue(issueId);
         return !issue.getStatus().equals("resolved");
     }
+
+    public void skipIfNotFixedBugify(int issueId) {
+        if (isIssueOpenBugify(issueId)) {
+            throw new SkipException("Ignored because of issue " + issueId);
+        }
+    }
+
+    public boolean isIssueOpenBugify(int issueId) {
+        Issue issue = app.rest().getIssue(issueId);
+        return !issue.getStatus().equals("Resolved");
+    }
 }

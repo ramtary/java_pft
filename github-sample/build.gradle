@@ -1,0 +1,11 @@
+apply plugin: 'java'
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'org.testng', name: 'testng', version: '6.9.10'
+    implementation group: 'com.jcabi', name: 'jcabi-github', version: '1.6.4'
+}
